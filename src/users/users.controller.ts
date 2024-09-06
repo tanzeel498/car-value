@@ -4,10 +4,10 @@ import { CreateUserDto } from './dtos/create-user.dto';
 
 @Controller('auth')
 export class UsersController {
-  constructor(public usersService: UsersService) {}
+  constructor(public service: UsersService) {}
 
-  @Post()
+  @Post('signup')
   createUser(@Body() body: CreateUserDto) {
-    console.log(body);
+    this.service.create(body.email, body.password);
   }
 }
