@@ -10,11 +10,11 @@ import {
   Query,
   NotFoundException,
   UseInterceptors,
-  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user-dto';
+import { SerializeInterceptor } from '../interceptors/serialize.interceptor';
 
 @Controller('auth')
 export class UsersController {
@@ -25,7 +25,7 @@ export class UsersController {
     this.service.create(body.email, body.password);
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
+  @UseInterceptors(SerializeInterceptor)
   @Get(':id')
   async findUser(@Param('id', ParseIntPipe) id: number) {
     console.log('I am running from within the controller');
