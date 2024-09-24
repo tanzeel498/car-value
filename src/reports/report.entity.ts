@@ -1,10 +1,19 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { User } from '../users/user.entity';
 
 @Entity()
 export class Report {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({ default: false })
+  approved: boolean;
 
   @Column()
   price: number;
@@ -28,5 +37,6 @@ export class Report {
   mileage: number;
 
   @ManyToOne(() => User, (user) => user.reports)
+  @JoinColumn({ name: 'user_id' }) // This sets the column name in the database to "user_id"
   user: User;
 }
