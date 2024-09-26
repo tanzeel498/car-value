@@ -2,12 +2,11 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 
 const migrations = ['**/database/migrations/*.ts'];
 
-const databaseName =
-  process.env.NODE_ENV === 'development' ? 'db.sqlite' : 'test.sqlite';
+let dbNames = { production: '', development: 'db.sqlite', test: 'test.sqlite' };
 
 export const config: DataSourceOptions = {
   type: 'sqlite',
-  database: databaseName,
+  database: dbNames[process.env.NODE_ENV],
   entities: ['**/*.entity.ts'],
   migrations,
   synchronize: false,
